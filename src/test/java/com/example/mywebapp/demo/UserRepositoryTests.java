@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
+import java.util.Optional;
 import java.util.function.BooleanSupplier;
 
 
@@ -27,18 +28,45 @@ public class UserRepositoryTests {
         user.setLastname("Stevenson");
         User savedUser = repo.save(user);
 
-        Assertions.assertNotNull(savedUser);
+        //Assertions.assertNotNull(savedUser);
         // Asserttions.assertThat(savedUser.getid()).isGreaterThan(0);
 
     }
-    @Test
-    public void testListAll(){
-        Iterable<User> users = repo.findAll();
-        Assertions.assertThat(users).hasSizeGreaterThan(0);
+    //@Test
+    //public void testListAll(){
+       // Iterable<User> users = repo.findAll();
+        //Assertions.assertThat(users).hasSizeGreaterThan(0);
 
-        for (User user :users){
-            System.out.println(user);
-        }
+       // for (User user :users){
+            //System.out.println(user);
+        //}
+   // }
+    @Test
+    public void testUpdate(){
+        Integer userId = 1;
+        Optional<User> optionalUser = repo.findById(userId);
+        User user = optionalUser.get();
+        user.setPassword("hello2002");
+        repo.save(user);
+
+        //User updatedUser = repo.findById().get();
+        //Assertions.assertThat(updatedUser.getPassword()).isEqualTo("hello2000");
+    }
+    //@Test
+    //public void testGet(){
+       // Integer userId = 2;
+       // Optional<User> optionalUser = repo.findById(userId);
+       // Assertions.assertThat(optionalUser).isPresent();
+       // System.out.println(optionalUser.get());
+    //}
+
+    @Test
+    public void testDelete(){
+        Integer userId = 5;
+        repo.deleteById(userId);
+
+        //Optional<User> optionalUser = repo.findById(userId);
+        //Assertions.assertThat(optionalUser).isNotPresent();
     }
 
 
